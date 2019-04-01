@@ -1,6 +1,7 @@
 #include "circle.hpp"
 
 #include <sstream>
+#include <type_traits>
 
 template <class T, int N>
 std::string Circle<T, N>::to_string() 
@@ -28,7 +29,30 @@ void Circle<T, N>::add(T new_element)
 template <class T, int N>
 bool Circle<T, N>::remove_element(T existing_element)
 {
-   // TODO
+   using namespace std;
+   
+   for(int i = 0; i < N; i++)
+   {
+      if(is_fundamental<T>::value && is_arithmetic<T>::value)
+      {
+          if(_buffer[i] == existing_element)
+          {
+	     _buffer[i] = NULL;
+	     return true;
+          }
+      } 
+      else if(is_compound<T>::value && is_pointer<T>::value)
+      {
+	 if(_buffer[i] == existing_element)
+	 {
+	    _buffer[i] = NULL;
+	    return true;
+	 }
+      } // TODO: support for other compound types.
+   }	
+   
+   // we never found the element.
+   return false;
 }
 
 template <class T, int N>

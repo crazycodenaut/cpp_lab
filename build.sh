@@ -1,1 +1,1 @@
-clang++ main.cpp -o demo.out
+clang++ main.cpp -o demo.out -std=c++11
